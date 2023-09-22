@@ -1,3 +1,4 @@
 #pragma once
+#include <bits/stdc++.h>
 
-int A();
+int GCD(int num1, int num2);
