@@ -11,9 +11,5 @@ int main() {
     cin >> num1 >> num2;
 
     int res = GCD(num1, num2);
-
-    if (res)
-        cout << "НОД: " << res << endl;
-    else
-        cout << "Некорректные данные" << endl;
+    cout << "НОД: " << res << endl;
 }
