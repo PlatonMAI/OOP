@@ -2,6 +2,15 @@
 #include <bits/stdc++.h>
 #include "lib.h"
 
+int tryGCD(int num1, int num2) {
+    try {
+        return GCD(num1, num2);
+    } catch(const std::logic_error& e) {
+        std::cout << e.what() << std::endl;
+        return -1;
+    }
+}
+
 int GCD(int num1, int num2) {
     // Если какое-либо из чисел ноль, то считать не будем блин
     bool isValidData = isValid(num1, num2);

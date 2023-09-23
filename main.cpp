@@ -10,6 +10,8 @@ int main() {
     int num1, num2;
     cin >> num1 >> num2;
 
-    int res = GCD(num1, num2);
-    cout << "НОД: " << res << endl;
+    int res = tryGCD(num1, num2);
+    if (res != -1) {
+        cout << "НОД: " << res << endl;
+    }
 }
