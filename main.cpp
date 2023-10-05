@@ -6,12 +6,35 @@
 using namespace std;
 
 int main() {
-    cout << "Введите два ненулевых целых числа: " << endl;
-    int num1, num2;
-    cin >> num1 >> num2;
+    Octal octal("514");
+    cout << octal << endl;
 
-    int res = tryGCD(num1, num2);
-    if (res != -1) {
-        cout << "НОД: " << res << endl;
-    }
+    Octal octal1 = octal;
+    cout << octal1 << endl;
+
+    Octal octal2(move(octal));
+    cout << octal2 << endl;
+    cout << octal << endl;
+
+    Octal octal3 = move(octal2);
+    cout << octal3 << endl;
+    cout << octal2 << endl;
+
+    Octal oct(514);
+    cout << (octal3 < oct) << endl;
+    cout << (octal3 > oct) << endl;
+    cout << (octal3 == oct) << endl;
+
+    Octal oct1("514");
+    cout << (octal3 < oct1) << endl;
+    cout << (octal3 > oct1) << endl;
+    cout << (octal3 == oct1) << endl;
+
+    oct1 = oct;
+    cout << oct1 << endl;
+    cout << oct << endl;
+
+    oct1 = move(octal3);
+    cout << oct1 << endl;
+    cout << octal3 << endl;
 }

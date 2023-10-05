@@ -6,6 +6,9 @@ build: clean-build
 	#git submodule update
 	cd ./build; cmake ..; make all
 
+build_:
+	cd ./build; cmake ..; make all
+
 run:
 	./build/*_exe
 

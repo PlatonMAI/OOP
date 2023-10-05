@@ -3,59 +3,64 @@
 
 #include "lib.h"
 
-// Первый блок тестов
+// TEST(MyFunCase, TestIsTrue)
+// {
+// 	ASSERT_TRUE((f() == std::pair<int, int>{1, 3}));
+// }
 
-class PositiveAndNegativeNumbers :public ::testing::TestWithParam< std::vector<int> > {};
+// // Первый блок тестов
 
-TEST_P(PositiveAndNegativeNumbers, ProcessingPositiveAndNegativeNumbers) {
-	std::vector<int> nums = GetParam();
+// class PositiveAndNegativeNumbers :public ::testing::TestWithParam< std::vector<int> > {};
 
-	// arrange
-	int num1 = nums[0],
-	num2 = nums[1],
+// TEST_P(PositiveAndNegativeNumbers, ProcessingPositiveAndNegativeNumbers) {
+// 	std::vector<int> nums = GetParam();
 
-	// act
-	res = nums[2];
+// 	// arrange
+// 	int num1 = nums[0],
+// 	num2 = nums[1],
 
-	// assert;
-	ASSERT_EQ(GCD(num1, num2), res);
-}
+// 	// act
+// 	res = nums[2];
 
-INSTANTIATE_TEST_SUITE_P(
-	NumbersWithoutZero,
-	PositiveAndNegativeNumbers,
-	::testing::Values(
-		std::vector<int>{17, 51, 17},
-		std::vector<int>{-17, 51, 17},
-		std::vector<int>{17, -51, 17},
-		std::vector<int>{-17, -51, 17},
-		std::vector<int>{51, 17, 17},
-		std::vector<int>{-51, 17, 17},
-		std::vector<int>{51, -17, 17},
-		std::vector<int>{-51, -17, 17},
-		std::vector<int>{12, 18, 6},
-		std::vector<int>{75, 10000, 25}
-));
+// 	// assert;
+// 	ASSERT_EQ(GCD(num1, num2), res);
+// }
 
-// Второй блок тестов
+// INSTANTIATE_TEST_SUITE_P(
+// 	NumbersWithoutZero,
+// 	PositiveAndNegativeNumbers,
+// 	::testing::Values(
+// 		std::vector<int>{17, 51, 17},
+// 		std::vector<int>{-17, 51, 17},
+// 		std::vector<int>{17, -51, 17},
+// 		std::vector<int>{-17, -51, 17},
+// 		std::vector<int>{51, 17, 17},
+// 		std::vector<int>{-51, 17, 17},
+// 		std::vector<int>{51, -17, 17},
+// 		std::vector<int>{-51, -17, 17},
+// 		std::vector<int>{12, 18, 6},
+// 		std::vector<int>{75, 10000, 25}
+// ));
 
-class ZeroInNumbers :public ::testing::TestWithParam<int> {};
+// // Второй блок тестов
 
-TEST_P(ZeroInNumbers, ProcessingZero) {
-	// arrange
-	int num = GetParam();
+// class ZeroInNumbers :public ::testing::TestWithParam<int> {};
 
-	// act
-	// Ну мы просто знаем, что функция должна вернуть logic_error
+// TEST_P(ZeroInNumbers, ProcessingZero) {
+// 	// arrange
+// 	int num = GetParam();
 
-	// assert;
-	ASSERT_THROW(GCD(0, num), std::logic_error);
-	ASSERT_THROW(GCD(num, 0), std::logic_error);
-}
+// 	// act
+// 	// Ну мы просто знаем, что функция должна вернуть logic_error
 
-INSTANTIATE_TEST_SUITE_P(
-	NumbersWithZero,
-	ZeroInNumbers,
-	::testing::Values(
-		-17, 51, 200
-));
+// 	// assert;
+// 	ASSERT_THROW(GCD(0, num), std::logic_error);
+// 	ASSERT_THROW(GCD(num, 0), std::logic_error);
+// }
+
+// INSTANTIATE_TEST_SUITE_P(
+// 	NumbersWithZero,
+// 	ZeroInNumbers,
+// 	::testing::Values(
+// 		-17, 51, 200
+// ));
