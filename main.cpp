@@ -6,35 +6,33 @@
 using namespace std;
 
 int main() {
-    Octal octal("514");
-    cout << octal << endl;
+    try {
+        const char* str = "902";
+        Octal a(str);
+    } catch (const std::logic_error& ex) {
+        cout << "Уппс! Ошибка!" << endl;
+        cout << ex.what() << endl;
+    }
 
-    Octal octal1 = octal;
-    cout << octal1 << endl;
+    Octal a("512");
+    Octal b(512);
 
-    Octal octal2(move(octal));
-    cout << octal2 << endl;
-    cout << octal << endl;
+    Octal c(0);
+    cout << c.size() << endl;
+    cout << c << endl;
 
-    Octal octal3 = move(octal2);
-    cout << octal3 << endl;
-    cout << octal2 << endl;
+    try {
+        a - b;
+    } catch (const std::logic_error& ex) {
+        cout << "Уппс! Ошибка!" << endl;
+        cout << ex.what() << endl;
+    }
 
-    Octal oct(514);
-    cout << (octal3 < oct) << endl;
-    cout << (octal3 > oct) << endl;
-    cout << (octal3 == oct) << endl;
+    cout << b - a << endl;
+    cout << b + a << endl;
+    cout << a + b << endl;
+    cout << a + a << endl;
+    cout << a - a << endl;
 
-    Octal oct1("514");
-    cout << (octal3 < oct1) << endl;
-    cout << (octal3 > oct1) << endl;
-    cout << (octal3 == oct1) << endl;
-
-    oct1 = oct;
-    cout << oct1 << endl;
-    cout << oct << endl;
-
-    oct1 = move(octal3);
-    cout << oct1 << endl;
-    cout << octal3 << endl;
+    cout << Octal(182).toInt() << endl;
 }

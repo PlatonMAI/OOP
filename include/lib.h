@@ -3,6 +3,7 @@
 
 class Octal {
 public:
+    void construct();
     Octal();
     Octal(int num);
     Octal(const char* num);
@@ -20,6 +21,11 @@ public:
     bool greater(const Octal& other) const; // true if other <
     bool equals(const Octal& other) const;
 
+    Octal plus(const Octal& other) const;
+    Octal minus(const Octal& other) const; // this - other
+
+    int toInt() const;
+
     virtual ~Octal() noexcept;
 
 private:
@@ -31,3 +37,6 @@ std::ostream& operator << (std::ostream& out, const Octal& octal);
 bool operator < (const Octal& a, const Octal& b);
 bool operator > (const Octal& a, const Octal& b);
 bool operator == (const Octal& a, const Octal& b);
+
+Octal operator + (const Octal& a, const Octal& b);
+Octal operator - (const Octal& a, const Octal& b);
