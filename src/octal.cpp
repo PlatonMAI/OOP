@@ -1,6 +1,15 @@
 // Copyright 2023 Лебедько Платон
 #include <bits/stdc++.h>
-#include "lib.h"
+#include "octal.h"
+
+using ll = int64_t;
+
+char intToChar(int x) {
+    return x + '0';
+};
+int charToInt(char c) {
+    return c - '0';
+};
 
 size_t Octal::size() const {
     return _size;
@@ -8,8 +17,11 @@ size_t Octal::size() const {
 
 int Octal::toInt() const {
     int num = 0;
-    for (int i = 0; i < _size; ++i)
-        num += (_array[i] - 48) * std::pow(8, i);
+    ll base = 1;
+    for (int i = 0; i < _size; ++i) {
+        num += charToInt(_array[i]) * base;
+        base *= 8;
+    }
     return num;
 }
 
@@ -31,23 +43,23 @@ Octal::Octal(int num) {
     _array = new unsigned char[_size];
 
     for (int i = 0; num != 0; ++i) {
-        _array[i] = (num % 8) + 48;
+        _array[i] = intToChar(num % 8);
         num /= 8;
     }
 }
-Octal::Octal(const char* num) {
+Octal::Octal(std::string num) {
     // std::cout << "Copy string constructor" << std::endl;
 
-    if (strlen(num) == 0) {
+    if (num.size() == 0) {
         construct();
         return;
     }
 
-    _size = strlen(num);
+    _size = num.size();
     _array = new unsigned char[_size];
 
     for (int i = 0; i < _size; ++i) {
-        if (num[i] < '0' || num[i] > '7') { // '0' - 48, '7' - 55
+        if (num[i] < '0' || num[i] > '7') {
             throw std::logic_error("invalid literal for int with base 8");
         }
         _array[_size - 1 - i] = num[i];
@@ -114,70 +126,57 @@ Octal::~Octal() {
 }
 
 std::ostream& operator << (std::ostream& out, const Octal& octal) {
-    return octal.print(out);
-}
-std::ostream& Octal::print(std::ostream& out) const {
-    if (_size == 0)
+    if (octal._size == 0) {
         out << "None";
-    else {
-        out << "0o";
-        for (int i = _size - 1; i >= 0; --i)
-            out << _array[i];
+        return out;
     }
+
+    out << "0o";
+    for (int i = octal._size - 1; i >= 0; --i)
+        out << octal._array[i];
+    
     return out;
 }
 
-bool operator < (const Octal& a, const Octal& b) {
-    return a.less(b);
-}
-bool Octal::less(const Octal& other) const {
-    if (_size != other.size()) {
+bool Octal::operator < (const Octal& other) const {
+    if (_size != other.size())
         return _size < other.size();
-    } else {
-        for (int i = _size - 1; i >= 0; --i) {
-            if (_array[i] != other._array[i]) {
-                return _array[i] < other._array[i];
-            }
+    
+    for (int i = _size - 1; i >= 0; --i) {
+        if (_array[i] != other._array[i]) {
+            return _array[i] < other._array[i];
         }
     }
+
     return false;
 }
-bool operator > (const Octal& a, const Octal& b) {
-    return a.greater(b);
-}
-bool Octal::greater(const Octal& other) const {
-    if (_size != other.size()) {
+bool Octal::operator > (const Octal& other) const {
+    if (_size != other.size())
         return _size > other.size();
-    } else {
-        for (int i = _size - 1; i >= 0; --i) {
-            if (_array[i] != other._array[i]) {
-                return _array[i] > other._array[i];
-            }
+
+    for (int i = _size - 1; i >= 0; --i) {
+        if (_array[i] != other._array[i]) {
+            return _array[i] > other._array[i];
         }
     }
+
     return false;
 }
-bool operator == (const Octal& a, const Octal& b) {
-    return a.equals(b);
-}
-bool Octal::equals(const Octal& other) const {
-    if (_size != other.size()) {
+bool Octal::operator == (const Octal& other) const {
+    if (_size != other.size())
         return false;
-    } else {
-        for (int i = _size - 1; i >= 0; --i) {
-            if (_array[i] != other._array[i]) {
-                return false;
-            }
+
+    for (int i = _size - 1; i >= 0; --i) {
+        if (_array[i] != other._array[i]) {
+            return false;
         }
     }
+
     return true;
 }
 
-Octal operator + (const Octal& a, const Octal& b) {
-    return a.plus(b);
-}
-Octal Octal::plus(const Octal& other) const {
-    int num = 0;
+Octal Octal::operator + (const Octal& other) const {
+    std::string num = "";
 
     char* greater = (char*)_array;
     char* smaller = (char*)other._array;
@@ -187,62 +186,64 @@ Octal Octal::plus(const Octal& other) const {
 
     int carry = 0;
     for (int i = 0; i < size; ++i) {
-        int c1 = greater[i] - 48,
-        c2 = smaller[i] - 48;
+        int c1 = charToInt(greater[i]),
+        c2 = charToInt(smaller[i]);
 
-        num += ((c1 + c2 + carry) % 8) * std::pow(8, i);
+        num += intToChar((c1 + c2 + carry) % 8);
         carry = (c1 + c2 + carry) / 8;
     }
 
     if (_size == other.size() && carry != 0) {
-        num += carry * std::pow(8, _size);
+        num += intToChar(carry);
     }
 
     for (int i = size; i < std::max(_size, other.size()); ++i) {
         if (i == size && carry != 0) {
-            num += ((greater[i] - 48) + carry) * std::pow(8, i);
+            num += intToChar( charToInt(greater[i]) + carry );
             continue;
         }
 
-        num += (greater[i] - 48) * std::pow(8, i);
+        num += greater[i];
     }
 
-    return Octal(num);
+    std::string num_rev = "";
+    for (int i = 0; i < num.size(); ++i)
+        num_rev += num[num.size() - 1 - i];
+    return Octal(num_rev);
 }
-
-Octal operator - (const Octal& a, const Octal& b) {
-    return a.minus(b);
-}
-Octal Octal::minus(const Octal& other) const {
+Octal Octal::operator - (const Octal& other) const {
     if (*this < other) {
         throw std::logic_error("Overflow (negative number)");
     }
 
-    int num = 0;
+    std::string num = "";
 
     int carry = 0;
     for (int i = 0; i < other.size(); ++i) {
-        int c1 = _array[i] - 48,
-        c2 = other._array[i] - 48;
+        int c1 = charToInt(_array[i]),
+        c2 = charToInt(other._array[i]);
 
         if (c1 - carry >= c2) {
-            num += (c1 - carry - c2) * pow(8, i);
+            num += intToChar(c1 - carry - c2);
             carry = 0;
         } else {
             c1 += 8;
-            num += (c1 - carry - c2) * pow(8, i);
+            num += intToChar(c1 - carry - c2);
             carry = 1;
         }
     }
 
     for (int i = other.size(); i < _size; ++i) {
         if (i == other.size() && carry != 0) {
-            num += ((_array[i] - 48) - carry) * std::pow(8, i);
+            num += intToChar( charToInt(_array[i]) - carry );
             continue;
         }
 
-        num += (_array[i] - 48) * std::pow(8, i);
+        num += _array[i];
     }
 
-    return Octal(num);
+    std::string num_rev = "";
+    for (int i = 0; i < num.size(); ++i)
+        num_rev += num[num.size() - 1 - i];
+    return Octal(num_rev);
 }

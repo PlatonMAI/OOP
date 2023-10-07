@@ -1,13 +1,12 @@
 #include <bits/stdc++.h>
-// #include <iostream>
 
-#include "lib.h"
+#include "octal.h"
 
 using namespace std;
 
 int main() {
     try {
-        const char* str = "902";
+        std::string str = "902";
         Octal a(str);
     } catch (const std::logic_error& ex) {
         cout << "Уппс! Ошибка!" << endl;
@@ -35,4 +34,5 @@ int main() {
     cout << a - a << endl;
 
     cout << Octal(182).toInt() << endl;
+    cout << Octal("1000").toInt() << endl;
 }

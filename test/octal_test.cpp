@@ -1,16 +1,16 @@
 #include <bits/stdc++.h>
 #include <gtest/gtest.h>
 
-#include "lib.h"
+#include "octal.h"
 
 // Тестим строки
 
-class Strings :public ::testing::TestWithParam< std::pair<const char*, const char*> > {};
+class Strings :public ::testing::TestWithParam< std::pair<std::string, std::string> > {};
 
 TEST_P(Strings, CompareStrings) {
     auto strings = GetParam();
-    const char* str1 = strings.first;
-    const char* str2 = strings.second;
+    std::string str1 = strings.first;
+    std::string str2 = strings.second;
     int num1 = std::stoi(str1),
     num2 = std::stoi(str2);
 
@@ -33,20 +33,20 @@ INSTANTIATE_TEST_SUITE_P(
 	StringsWithoutIncorrect,
 	Strings,
 	::testing::Values(
-		std::pair<const char*, const char*>{"1332", "73220"},
-        std::pair<const char*, const char*>{"2212", "111"},
-        std::pair<const char*, const char*>{"362", "3021"},
-        std::pair<const char*, const char*>{"11", "11"},
-        std::pair<const char*, const char*>{"1000", "5321"}
+		std::pair<std::string, std::string>{"1332", "73220"},
+        std::pair<std::string, std::string>{"2212", "111"},
+        std::pair<std::string, std::string>{"362", "3021"},
+        std::pair<std::string, std::string>{"11", "11"},
+        std::pair<std::string, std::string>{"1000", "5321"}
 ));
 
 // Тестим плохие литералы
 
-class BadStrings :public ::testing::TestWithParam< const char* > {};
+class BadStrings :public ::testing::TestWithParam< std::string > {};
 
 TEST_P(BadStrings, InitFromString) {
 	// arrange
-	const char* str = GetParam();
+	std::string str = GetParam();
 
 	// act
 	// Ну мы просто знаем, что функция должна вернуть logic_error
