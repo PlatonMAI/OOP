@@ -17,14 +17,20 @@ int main() {
     vector<Point2D> rect_{{2, 0}, {0, 0}, {2, 1}, {0, 1}};
     vector<Point2D> sq{{0, 0}, {1, 0}, {1, 1}, {0, 1}};
 
-    Rectangle r = Rectangle::create(rect);
+    // Rectangle r = Rectangle::create(rect);
     
-    // Triangle t(tri);
-    // cout << t << endl;
-    // Rectangle r(rect_);
-    // cout << r << endl;
-    // Square s(sq);
-    // cout << s << endl;
+    Triangle t(tri);
+    cout << t << endl;
+    Rectangle r(rect_);
+    cout << r << endl;
+    Square s(sq);
+    cout << s << endl;
+
+    Array array{&t, &r, &s};
+    printFigures(array);
+    cout << getTotalSquare(array) << endl;
+    popIndex(array, 1);
+    printFigures(array);
 
     // Triangle t1(t);
     // cout << t1 << endl;

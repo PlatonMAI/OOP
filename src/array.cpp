@@ -1,14 +1,14 @@
 #include <array.h>
 
-void printFigures(const Array& array) {
+void printFigures(Array& array) {
     for (Figure* figure : array) {
-        std::cout << figure;
+        std::cout << *figure;
         std::cout << "Геометрический центр: " << figure->get_center() <<
         "\nПлощадь: " << double(*figure) << std::endl;
     }
 }
 
-double getTotalSquare(const Array& array) {
+double getTotalSquare(Array& array) {
     double res = 0;
     for (Figure* figure : array) {
         res += double(*figure);
