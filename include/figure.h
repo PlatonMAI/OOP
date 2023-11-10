@@ -2,11 +2,13 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <memory>
 
 #include <../src/point2d.cpp>
 #include <../src/vector.cpp>
 
 template <Number T>
+// class Figure : public std::enable_shared_from_this<Figure<T>> {
 class Figure {
     template <Number T_>
     friend std::ostream& operator<<(std::ostream&, const Figure<T_>&);
@@ -36,6 +38,8 @@ public:
     std::vector<Point2D<T>> getPoints() const;
 
     ~Figure();
+
+    // std::shared_ptr<Figure> getptr() { return shared_from_this(); }
 
 protected:
     void builder(std::vector<Point2D<T>>&);

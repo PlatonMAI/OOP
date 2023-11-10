@@ -28,7 +28,11 @@ int main() {
     Square<double> s = Square<double>::create(sq);
     cout << s << endl;
 
-    Array<double> array{{&t, &r, &s}};
+    // Array<double> array({shared_ptr<Figure<double>>(&t), shared_ptr<Figure<double>>(&r), shared_ptr<Figure<double>>(&s)});
+    shared_ptr<Figure<double>> tp = make_shared<Triangle<double>>(tri);
+    shared_ptr<Figure<double>> rp = make_shared<Rectangle<double>>(rect_);
+    shared_ptr<Figure<double>> sp = make_shared<Square<double>>(sq);
+    Array<double> array{{tp, rp, sp}};
     array.printFigures();
     cout << array.getTotalSquare() << endl;
     array.popIndex(1);

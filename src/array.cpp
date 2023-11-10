@@ -3,18 +3,20 @@
 
 template <Number T>
 void Array<T>::printFigures() {
-    for (Figure<T>* figure : this->figures) {
-        std::cout << *figure;
-        std::cout << "Геометрический центр: " << figure->get_center() <<
-        "\nПлощадь: " << double(*figure) << std::endl;
+    // for (std::shared_ptr<Figure<T>>& figure : this->figures) {
+    for (int i = 0; i < this->figures.size(); ++i) {
+        std::cout << *(this->figures[i]);
+        std::cout << "Геометрический центр: " << this->figures[i]->get_center() <<
+        "\nПлощадь: " << double(*(this->figures[i])) << std::endl;
     }
 }
 
 template <Number T>
 double Array<T>::getTotalSquare() {
     double res = 0;
-    for (Figure<T>* figure : this->figures) {
-        res += double(*figure);
+    // for (std::shared_ptr<Figure<T>>& figure : this->figures) {
+    for (int i = 0; i < this->figures.size(); ++i) {
+        res += double(*(this->figures[i]));
     }
 
     return res;
