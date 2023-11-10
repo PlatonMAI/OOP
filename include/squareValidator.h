@@ -1,9 +1,10 @@
 #pragma once
 
-#include <rectangleValidator.h>
+#include <../src/rectangleValidator.cpp>
 
-class SquareValidator : public RectangleValidator {
+template <Number T>
+class SquareValidator : public RectangleValidator<T> {
 public:
-    virtual bool validate(std::vector<Point2D>&) override;
-    virtual bool validate(Point2D&, Point2D&) override;
+    virtual bool validate(std::vector<Point2D<T>>&) override;
+    virtual bool validate(Point2D<T>&, Point2D<T>&) override;
 };

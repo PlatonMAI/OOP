@@ -1,23 +1,30 @@
 #pragma once
 #include <iostream>
 
+template <typename T>
+concept Number = std::is_default_constructible<T>::value || std::integral<T> || std::floating_point<T>;
+
+template <Number T>
 class Point2D {
-    friend std::ostream& operator<<(std::ostream&, const Point2D&);
-    friend std::istream& operator>>(std::istream&, Point2D&);
+    template <Number T_>
+    friend std::ostream& operator<<(std::ostream&, const Point2D<T_>&);
+    template <Number T_>
+    friend std::istream& operator>>(std::istream&, Point2D<T_>&);
     
-    friend bool operator==(const Point2D&, const Point2D&);
+    template <Number T_>
+    friend bool operator==(const Point2D<T_>&, const Point2D<T_>&);
     // friend bool operator<(const Point2D&, const Point2D&);
 public:
     Point2D() = default;
-    Point2D(double x, double y) : _x(x), _y(y) {}
+    Point2D(T x, T y) : _x(x), _y(y) {}
 
-    double x() const { return _x; }
-    double y() const { return _y; }
+    T x() const { return _x; }
+    T y() const { return _y; }
 
-    double& x() { return _x; }
-    double& y() { return _y; }
+    T& x() { return _x; }
+    T& y() { return _y; }
 
 protected:
-    double _x;
-    double _y;
+    T _x;
+    T _y;
 };

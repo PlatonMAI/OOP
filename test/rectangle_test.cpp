@@ -1,8 +1,8 @@
-#include <rectangle.h>
-#include <rectangleValidator.h>
+#include <../src/rectangle.cpp>
+#include <../src/rectangleValidator.cpp>
 #include <gtest/gtest.h>
 
-using Points = std::vector<Point2D>;
+using Points = std::vector<Point2D<double>>;
 
 class RectangleIncorrect : public ::testing::TestWithParam< Points > {};
 
@@ -14,7 +14,7 @@ TEST_P(RectangleIncorrect, Validation) {
 	// Ну мы просто знаем, что функция должна вернуть logic_error
 
 	// assert
-	ASSERT_THROW(Rectangle::create(points), validator_error);
+	ASSERT_THROW(Rectangle<double>::create(points), validator_error);
 }
 
 INSTANTIATE_TEST_SUITE_P(
@@ -34,7 +34,7 @@ class Rectangles : public ::testing::TestWithParam< Points > {};
 TEST_P(Rectangles, CalculateArea) {
     // arrange
     Points points = GetParam();
-    Rectangle rectangle = Rectangle::create(points);
+    Rectangle<double> rectangle = Rectangle<double>::create(points);
 
     // act
     double
@@ -62,12 +62,12 @@ class RectanglesWithCenter : public ::testing::TestWithParam< Points > {};
 TEST_P(RectanglesWithCenter, CalculateCenter) {
     // arrange
     Points points = GetParam();
-    Point2D expectedCenter = points[4];
+    Point2D<double> expectedCenter = points[4];
     points.pop_back();
-    Rectangle rectangle = Rectangle::create(points);
+    Rectangle<double> rectangle = Rectangle<double>::create(points);
 
     // act
-    Point2D calculatedCenter = rectangle.get_center();
+    Point2D<double> calculatedCenter = rectangle.get_center();
 
     // assert
     ASSERT_EQ(expectedCenter, calculatedCenter);

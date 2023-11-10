@@ -1,8 +1,8 @@
-#include <triangle.h>
-#include <triangleValidator.h>
+#include <../src/triangle.cpp>
+#include <../src/triangleValidator.cpp>
 #include <gtest/gtest.h>
 
-using Points = std::vector<Point2D>;
+using Points = std::vector<Point2D<double>>;
 
 class TriangleIncorrect : public ::testing::TestWithParam< Points > {};
 
@@ -14,7 +14,7 @@ TEST_P(TriangleIncorrect, Validation) {
 	// Ну мы просто знаем, что функция должна вернуть logic_error
 
 	// assert
-	ASSERT_THROW(Triangle::create(points), validator_error);
+	ASSERT_THROW(Triangle<double>::create(points), validator_error);
 }
 
 INSTANTIATE_TEST_SUITE_P(
@@ -33,7 +33,7 @@ class Triangles : public ::testing::TestWithParam< Points > {};
 TEST_P(Triangles, CalculateArea) {
     // arrange
     Points points = GetParam();
-    Triangle triangle = Triangle::create(points);
+    Triangle<double> triangle = Triangle<double>::create(points);
 
     // act
     double
@@ -63,10 +63,10 @@ TEST_P(TrianglesWithCenter, CalculateCenter) {
     Points points = GetParam();
     Point2D expectedCenter = points[3];
     points.pop_back();
-    Triangle triangle = Triangle::create(points);
+    Triangle<double> triangle = Triangle<double>::create(points);
 
     // act
-    Point2D calculatedCenter = triangle.get_center();
+    Point2D<double> calculatedCenter = triangle.get_center();
 
     // assert
     ASSERT_EQ(expectedCenter, calculatedCenter);

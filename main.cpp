@@ -2,35 +2,37 @@
 
 #include <bits/stdc++.h>
 
-#include <figure.h>
-#include <triangle.h>
-#include <square.h>
-#include <rectangle.h>
-#include <array.h>
+#include <../src/figure.cpp>
+#include <../src/triangle.cpp>
+#include <../src/square.cpp>
+#include <../src/rectangle.cpp>
+#include <../src/array.cpp>
 
 using namespace std;
 
+// using Array = vector<Figure<double>*>;
+
 int main() {
-    vector<Point2D> tri{{0, 0}, {1, 0}, {0, 1}};
-    vector<Point2D> tri_{{1, 1}, {1, 0}, {0, 1}};
-    vector<Point2D> rect{{0, 0}, {2, 0}, {2, 1}, {0, 1}};
-    vector<Point2D> rect_{{2, 0}, {0, 0}, {2, 1}, {0, 1}};
-    vector<Point2D> sq{{0, 0}, {1, 0}, {1, 1}, {0, 1}};
+    vector<Point2D<double>> tri{{0, 0}, {1, 0}, {0, 1}};
+    vector<Point2D<double>> tri_{{1, 1}, {1, 0}, {0, 1}};
+    vector<Point2D<double>> rect{{0, 0}, {2, 0}, {2, 1}, {0, 1}};
+    vector<Point2D<double>> rect_{{2, 0}, {0, 0}, {2, 1}, {0, 1}};
+    vector<Point2D<double>> sq{{0, 0}, {1, 0}, {1, 1}, {0, 1}};
 
     // Rectangle r = Rectangle::create(rect);
     
-    Triangle t(tri);
+    Triangle<double> t = Triangle<double>::create(tri);
     cout << t << endl;
-    Rectangle r(rect_);
+    Rectangle<double> r = Rectangle<double>::create(rect_);
     cout << r << endl;
-    Square s(sq);
+    Square<double> s = Square<double>::create(sq);
     cout << s << endl;
 
-    Array array{&t, &r, &s};
-    printFigures(array);
-    cout << getTotalSquare(array) << endl;
-    popIndex(array, 1);
-    printFigures(array);
+    Array<double> array{{&t, &r, &s}};
+    array.printFigures();
+    cout << array.getTotalSquare() << endl;
+    array.popIndex(1);
+    array.printFigures();
 
     // Triangle t1(t);
     // cout << t1 << endl;
@@ -39,12 +41,12 @@ int main() {
     // t = t1;
     // cout << t << endl;
 
-    // vector<Point2D> tri1{{0, 0}, {1, 0}, {0, 1}};
+    // vector<Point2D<double>> tri1{{0, 0}, {1, 0}, {0, 1}};
     // vector<Point2D> tri2{{0, 0}, {-1, 0}, {0, 1}};
     // vector<Point2D> tri3{{0, 0}, {-1, 0}, {0, -1}};
     // vector<Point2D> tri4{{0, 0}, {1, 0}, {0, -1}};
 
-    // Triangle t1 = Triangle::create(tri1);
+    // Triangle<double> t1 = Triangle<double>::create(tri1);
     // Triangle t2 = Triangle::create(tri2);
     // Triangle t3 = Triangle::create(tri3);
     // Triangle t4 = Triangle::create(tri4);

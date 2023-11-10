@@ -1,20 +1,26 @@
+#pragma once
 #include <vector.h>
 
-Vector::Vector(Point2D& a, Point2D& b) {
-    _x = b.x() - a.x();
-    _y = b.y() - a.y();
+template <Number T>
+Vector<T>::Vector(Point2D<T>& a, Point2D<T>& b) {
+    this->_x = b.x() - a.x();
+    this->_y = b.y() - a.y();
 }
 
-double Vector::getLength() {
-    return sqrt(_x * _x + _y * _y);
+template <Number T>
+double Vector<T>::getLength() {
+    return sqrt(this->_x * this->_x + this->_y * this->_y);
 }
-Vector::operator double() {
+template <Number T>
+Vector<T>::operator double() {
     return this->getLength();
 }
 
-double scalar(Vector& a, Vector& b) {
+template <Number T>
+double scalar(Vector<T>& a, Vector<T>& b) {
     return (a.x() * b.x() + a.y() * b.y());
 }
-double getCos(Vector& a, Vector& b) {
+template <Number T>
+double getCos(Vector<T>& a, Vector<T>& b) {
     return scalar(a, b) / (a * b);
 }

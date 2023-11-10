@@ -1,17 +1,19 @@
+#pragma once
 #include <squareValidator.h>
-#include <square.h>
+#include <../src/square.cpp>
 
-bool SquareValidator::validate(std::vector<Point2D>& points) {
+template <Number T>
+bool SquareValidator<T>::validate(std::vector<Point2D<T>>& points) {
     // Квадрат - это прямоугольник с равными сторонами
     // На прямоугольник проверять умеем, проверим на равенство сторон
 
-    RectangleValidator::validate(points);
+    RectangleValidator<T>::validate(points);
 
     std::vector<double> sides;
-    std::vector<Point2D> new_points = sortPoints(points);
+    std::vector<Point2D<T>> new_points = sortPoints<T>(points);
     for (int i = 0; i < 4; i += 2) {
         for (int j = 1; j < 4; j += 2) {
-            sides.push_back( Vector(new_points[i], new_points[j]).getLength() );
+            sides.push_back( Vector<T>(new_points[i], new_points[j]).getLength() );
         }
     }
 
@@ -22,14 +24,15 @@ bool SquareValidator::validate(std::vector<Point2D>& points) {
 
     return true;
 }
-bool SquareValidator::validate(Point2D& a, Point2D& c) {
+template <Number T>
+bool SquareValidator<T>::validate(Point2D<T>& a, Point2D<T>& c) {
     // Проверим сначала, можем ли построить прямоугольник
     // Затем выгоднее просто восстановить точки
     // и скормить стандартному валидатору
 
-    RectangleValidator::validate(a, c);
+    RectangleValidator<T>::validate(a, c);
 
-    std::vector<Point2D> tmp( recoverPoints(a, c) );
+    std::vector<Point2D<T>> tmp( recoverPoints<T>(a, c) );
     validate(tmp);
 
     return true;

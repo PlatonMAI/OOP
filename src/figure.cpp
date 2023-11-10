@@ -1,6 +1,8 @@
+#pragma once
 #include "figure.h"
 
-std::ostream& operator<<(std::ostream& out, const Figure& figure) {
+template <Number T>
+std::ostream& operator<<(std::ostream& out, const Figure<T>& figure) {
     // Вывод фигуры
     out << "Фигура " << figure.getName() << ":\n";
     for (int i = 0; i < figure.getVertices(); ++i)
@@ -8,22 +10,25 @@ std::ostream& operator<<(std::ostream& out, const Figure& figure) {
     out << "\n";
     return out;
 }
-std::istream& operator>>(std::istream& in, Figure& figure) {
+template <Number T>
+std::istream& operator>>(std::istream& in, Figure<T>& figure) {
     // Ввод фигуры
     for (int i = 0; i < figure.getVertices(); ++i)
         in >> figure._array[i];
     return in;
 }
 
-void Figure::builder(std::vector<Point2D>& points) {
+template <Number T>
+void Figure<T>::builder(std::vector<Point2D<T>>& points) {
     std::cout << "Я общий билдер. Я был вызван для класса " << getName() << " с количеством вершин " << getVertices() << std::endl;
     for (int i = 0; i < getVertices(); ++i) {
         _array[i] = points[i];
     }
 }
-void Figure::constructor(std::vector<Point2D>& points) {
+template <Number T>
+void Figure<T>::constructor(std::vector<Point2D<T>>& points) {
     std::cout << "Я общий конструктор" << std::endl;
-    _array = new Point2D[getVertices()];
+    _array = new Point2D<T>[getVertices()];
     builder(points);
 }
 // Figure::Figure(std::vector<Point2D>& points) {
@@ -35,12 +40,14 @@ void Figure::constructor(std::vector<Point2D>& points) {
 
 //     constructor(points);
 // }
-Figure::Figure(Figure&& other, int vertices) {
+template <Number T>
+Figure<T>::Figure(Figure&& other, int vertices) {
     std::cout << "Я конструктор перемещения" << std::endl;
     _array = other._array;
-    other._array = new Point2D[vertices];
+    other._array = new Point2D<T>[vertices];
 }
-Figure::~Figure() {
+template <Number T>
+Figure<T>::~Figure() {
     std::cout << "Я деструктор" << std::endl;
     delete[] _array;
 }
@@ -53,21 +60,24 @@ Figure::~Figure() {
 
 //     return *this;
 // }
-Figure& Figure::operator=(Figure&& other) {
+template <Number T>
+Figure<T>& Figure<T>::operator=(Figure&& other) {
     std::cout << "Я общий оператор перемещающего присваивания. Я был вызван для класса " << getName() << " с количеством вершин " << getVertices() << std::endl;
     _array = other._array;
-    other._array = new Point2D[getVertices()];
+    other._array = new Point2D<T>[getVertices()];
     return *this;
 }
 
-std::vector<Point2D> Figure::getPoints() const {
-    std::vector<Point2D> points(getVertices());
+template <Number T>
+std::vector<Point2D<T>> Figure<T>::getPoints() const {
+    std::vector<Point2D<T>> points(getVertices());
     for (int i = 0; i < getVertices(); ++i)
         points[i] = _array[i];
     return points;
 }
 
-Point2D getIntersectionPoint(Point2D& s1, Point2D& e1, Point2D& s2, Point2D& e2) {
+template <Number T>
+Point2D<T> getIntersectionPoint(Point2D<T>& s1, Point2D<T>& e1, Point2D<T>& s2, Point2D<T>& e2) {
     // s и e - сокращение от start и end
 
     // Имеем уравнение двух прямых по двум точкам
@@ -81,7 +91,7 @@ Point2D getIntersectionPoint(Point2D& s1, Point2D& e1, Point2D& s2, Point2D& e2)
     // (a b | e)
     // (c d | f)
 
-    double
+    T
     a = -1,
     b = (e1.x() - s1.x()) / (e1.y() - s1.y()),
     c = (e2.y() - s2.y()) / (e2.x() - s2.x()),
@@ -94,11 +104,12 @@ Point2D getIntersectionPoint(Point2D& s1, Point2D& e1, Point2D& s2, Point2D& e2)
     x = det1 / det,
     y = det2 / det;
 
-    return Point2D(x, y);
+    return Point2D<T>(x, y);
 }
 
-double getLengthVector(Point2D& a, Point2D& b) {
-    double
+template <Number T>
+T getLengthVector(Point2D<T>& a, Point2D<T>& b) {
+    T
     x = a.x() - b.x(),
     y = a.y() - b.y();
     return sqrt(x * x + y * y);

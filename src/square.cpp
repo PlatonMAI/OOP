@@ -1,15 +1,18 @@
+#pragma once
 #include <square.h>
-#include <squareValidator.h>
+#include <../src/squareValidator.cpp>
 
-Square Square::create(std::vector<Point2D> points) {
-    SquareValidator validator;
+template <Number T>
+Square<T> Square<T>::create(std::vector<Point2D<T>> points) {
+    SquareValidator<T> validator;
 
     validator.validate(points);
 
     return Square(points);
 }
-Square Square::create(Point2D& a, Point2D& c) {
-    SquareValidator validator;
+template <Number T>
+Square<T> Square<T>::create(Point2D<T>& a, Point2D<T>& c) {
+    SquareValidator<T> validator;
 
     validator.validate(a, c);
 

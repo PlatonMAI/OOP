@@ -1,9 +1,18 @@
 #pragma once
 
-#include <figure.h>
+#include <../src/figure.cpp>
 
-using Array = std::vector<Figure*>;
+template <Number T>
+class Array {
+    typedef std::vector<Figure<T>*> array;
 
-void printFigures(Array&);
-double getTotalSquare(Array&);
-Array& popIndex(Array&, int);
+public:
+    Array(const array& figures) : figures(figures) {}
+
+    void printFigures();
+    double getTotalSquare();
+    void popIndex(int);
+
+private:
+    array figures;
+};

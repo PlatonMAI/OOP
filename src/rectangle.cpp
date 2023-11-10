@@ -1,20 +1,23 @@
+#pragma once
 #include <rectangle.h>
-#include <rectangleValidator.h>
+#include <../src/rectangleValidator.cpp>
 
-std::vector<Point2D> recoverPoints(Point2D& a, Point2D& c) {
+template <Number T>
+std::vector<Point2D<T>> recoverPoints(Point2D<T>& a, Point2D<T>& c) {
     Point2D
     b(a.x(), c.y()),
     d(c.x(), a.y());
 
-    return std::vector<Point2D>{a, b, c, d};
+    return std::vector<Point2D<T>>{a, b, c, d};
 }
 
+template <Number T>
 // Хотим, чтобы первая и третья, а также вторая и четвертая точки в массиве были противоположными вершинами
-std::vector<Point2D> sortPoints(std::vector<Point2D>& points) {
+std::vector<Point2D<T>> sortPoints(std::vector<Point2D<T>>& points) {
     // Для этого зафиксируем точку, найдем расстояния от нее до всех остальных трех.
     // Точка, до которой будет наибольшее расстояние - и есть искомая противоположная вершина
     
-    std::vector<Point2D> new_points(4);
+    std::vector<Point2D<T>> new_points(4);
     new_points[0] = points[0];
     double max_dist = 0;
     int index = -1;
@@ -39,57 +42,65 @@ std::vector<Point2D> sortPoints(std::vector<Point2D>& points) {
     return new_points;
 }
 
-Rectangle::Rectangle(std::vector<Point2D>& points) {
-    points = sortPoints(points);
+template <Number T>
+Rectangle<T>::Rectangle(std::vector<Point2D<T>>& points) {
+    points = sortPoints<T>(points);
 
     // Можно ли как-то вызвать конструктор Figure с отсортированным points?
-    constructor(points);
+    this->constructor(points);
 }
-Rectangle::Rectangle(Point2D& a, Point2D& c) {
-    std::vector<Point2D> tmp( recoverPoints(a, c) );
+template <Number T>
+Rectangle<T>::Rectangle(Point2D<T>& a, Point2D<T>& c) {
+    std::vector<Point2D<T>> tmp( recoverPoints<T>(a, c) );
     // Тут, очевидно, мы гарантируем, что вектор отсортирован правильно
-    constructor(tmp);
+    this->constructor(tmp);
 }
-Rectangle::Rectangle(const Rectangle& other) {
+template <Number T>
+Rectangle<T>::Rectangle(const Rectangle& other) {
     std::cout << "Конструктор копирования прямоугольника" << std::endl;
-    std::vector<Point2D> points = other.getPoints();
+    std::vector<Point2D<T>> points = other.getPoints();
 
-    constructor(points);
+    this->constructor(points);
 }
 
-Rectangle& Rectangle::operator=(const Rectangle& other) {
+template <Number T>
+Rectangle<T>& Rectangle<T>::operator=(const Rectangle& other) {
     std::cout << "Оператор копирующего присваивания прямоугольника " << std::endl;
-    std::vector<Point2D> points = other.getPoints();
+    std::vector<Point2D<T>> points = other.getPoints();
 
-    builder(points);
+    this->builder(points);
 
     return *this;
 }
 
-Point2D Rectangle::get_center() {
+template <Number T>
+Point2D<T> Rectangle<T>::get_center() {
     // Центр прямоугольника - точка пересечения его диагоналей
     // По построению - первая и третья, а также вторая и четвертая точки - противоположные вершины
 
-    return getIntersectionPoint(_array[0], _array[2], _array[1], _array[3]);
+    return getIntersectionPoint(this->_array[0], this->_array[2], this->_array[1], this->_array[3]);
 }
-Rectangle::operator double() {
+template <Number T>
+Rectangle<T>::operator double() {
     // Площадь - приятно
-    Vector
-    a(_array[0], _array[1]),
-    b(_array[0], _array[3]);
+    Vector<T>
+    a(this->_array[0], this->_array[1]),
+    b(this->_array[0], this->_array[3]);
 
     return a * b;
 }
 
-Rectangle Rectangle::create(std::vector<Point2D> points) {
-    RectangleValidator validator;
+template <Number T>
+Rectangle<T> Rectangle<T>::create(std::vector<Point2D<T>> points) {
+    RectangleValidator<T> validator;
 
     validator.validate(points);
 
     return Rectangle(points);
 }
-Rectangle Rectangle::create(Point2D& a, Point2D& c) {
-    RectangleValidator validator;
+template <Number T>
+Rectangle<T> Rectangle<T>::create(Point2D<T>& a, Point2D<T>& c) {
+    RectangleValidator<T> validator;
 
     validator.validate(a, c);
 

@@ -1,8 +1,8 @@
-#include <square.h>
-#include <squareValidator.h>
+#include <../src/square.cpp>
+#include <../src/squareValidator.cpp>
 #include <gtest/gtest.h>
 
-using Points = std::vector<Point2D>;
+using Points = std::vector<Point2D<double>>;
 
 class SquareIncorrect : public ::testing::TestWithParam< Points > {};
 
@@ -14,7 +14,7 @@ TEST_P(SquareIncorrect, Validation) {
 	// Ну мы просто знаем, что функция должна вернуть logic_error
 
 	// assert
-	ASSERT_THROW(Square::create(points), validator_error);
+	ASSERT_THROW(Square<double>::create(points), validator_error);
 }
 
 INSTANTIATE_TEST_SUITE_P(
@@ -35,7 +35,7 @@ class Squares : public ::testing::TestWithParam< Points > {};
 TEST_P(Squares, CalculateArea) {
     // arrange
     Points points = GetParam();
-    Square square = Square::create(points);
+    Square<double> square = Square<double>::create(points);
 
     // act
     double
@@ -63,12 +63,12 @@ class SquaresWithCenter : public ::testing::TestWithParam< Points > {};
 TEST_P(SquaresWithCenter, CalculateCenter) {
     // arrange
     Points points = GetParam();
-    Point2D expectedCenter = points[4];
+    Point2D<double> expectedCenter = points[4];
     points.pop_back();
-    Square square = Square::create(points);
+    Square<double> square = Square<double>::create(points);
 
     // act
-    Point2D calculatedCenter = square.get_center();
+    Point2D<double> calculatedCenter = square.get_center();
 
     // assert
     ASSERT_EQ(expectedCenter, calculatedCenter);

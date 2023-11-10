@@ -1,6 +1,8 @@
+#pragma once
 #include <triangleValidator.h>
 
-bool TriangleValidator::validate(std::vector<Point2D>& points) {
+template <Number T>
+bool TriangleValidator<T>::validate(std::vector<Point2D<T>>& points) {
     // Должно быть три точки
     if (points.size() != 3) {
         throw validator_error("Некорректное число точек");
@@ -23,7 +25,7 @@ bool TriangleValidator::validate(std::vector<Point2D>& points) {
         }
     }
 
-    double
+    T
     k1 = (points[1].y() - points[0].y()) / (points[1].x() - points[0].x()),
     k2 = (points[2].y() - points[0].y()) / (points[2].x() - points[0].x());
 

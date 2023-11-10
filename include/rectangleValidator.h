@@ -1,9 +1,10 @@
 #pragma once
 
-#include <figureValidator.h>
+#include <../src/figureValidator.cpp>
 
-class RectangleValidator : public FigureValidator {
+template <Number T>
+class RectangleValidator : public FigureValidator<T> {
 public:
-    virtual bool validate(std::vector<Point2D>&) override;
-    virtual bool validate(Point2D&, Point2D&);
+    virtual bool validate(std::vector<Point2D<T>>&) override;
+    virtual bool validate(Point2D<T>&, Point2D<T>&);
 };

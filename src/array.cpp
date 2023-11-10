@@ -1,28 +1,30 @@
+#pragma once
 #include <array.h>
 
-void printFigures(Array& array) {
-    for (Figure* figure : array) {
+template <Number T>
+void Array<T>::printFigures() {
+    for (Figure<T>* figure : this->figures) {
         std::cout << *figure;
         std::cout << "Геометрический центр: " << figure->get_center() <<
         "\nПлощадь: " << double(*figure) << std::endl;
     }
 }
 
-double getTotalSquare(Array& array) {
+template <Number T>
+double Array<T>::getTotalSquare() {
     double res = 0;
-    for (Figure* figure : array) {
+    for (Figure<T>* figure : this->figures) {
         res += double(*figure);
     }
 
     return res;
 }
 
-Array& popIndex(Array& array, int index) {
-    if (index >= array.size()) {
+template <Number T>
+void Array<T>::popIndex(int index) {
+    if (index >= this->figures.size()) {
         throw std::logic_error("Index out of range");
     }
 
-    array.erase(array.begin() + index);
-
-    return array;
+    this->figures.erase(this->figures.begin() + index);
 }

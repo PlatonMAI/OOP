@@ -1,3 +1,4 @@
+#pragma once
 #include <figureValidator.h>
 
 // bool FigureValidator::validate(const std::type_info& type, std::vector<Point2D>& points) {

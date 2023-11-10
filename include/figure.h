@@ -3,12 +3,15 @@
 #include <vector>
 #include <cmath>
 
-#include <point2d.h>
-#include <vector.h>
+#include <../src/point2d.cpp>
+#include <../src/vector.cpp>
 
+template <Number T>
 class Figure {
-    friend std::ostream& operator<<(std::ostream&, const Figure&);
-    friend std::istream& operator>>(std::istream&, Figure&);
+    template <Number T_>
+    friend std::ostream& operator<<(std::ostream&, const Figure<T_>&);
+    template <Number T_>
+    friend std::istream& operator>>(std::istream&, Figure<T_>&);
 
 public:
     Figure() = default;
@@ -27,22 +30,24 @@ public:
     virtual std::string getName() const { return ""; }
 
     // Геометрия
-    virtual Point2D get_center() = 0;
+    virtual Point2D<T> get_center() = 0;
     virtual operator double() = 0;
 
-    std::vector<Point2D> getPoints() const;
+    std::vector<Point2D<T>> getPoints() const;
 
     ~Figure();
 
 protected:
-    void builder(std::vector<Point2D>&);
-    void constructor(std::vector<Point2D>&);
+    void builder(std::vector<Point2D<T>>&);
+    void constructor(std::vector<Point2D<T>>&);
 
-    Point2D* _array;
+    Point2D<T>* _array;
 };
 
 // Точка пересечения двух прямых, заданных двумя точками
-Point2D getIntersectionPoint(Point2D&, Point2D&, Point2D&, Point2D&);
+template <Number T>
+Point2D<T> getIntersectionPoint(Point2D<T>&, Point2D<T>&, Point2D<T>&, Point2D<T>&);
 
 // Длина вектора по двум точкам
-double getLengthVector(Point2D&, Point2D&);
+template <Number T>
+double getLengthVector(Point2D<T>&, Point2D<T>&);
