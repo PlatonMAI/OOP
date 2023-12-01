@@ -2,8 +2,8 @@
 
 build: clean-build
 	mkdir build
-	#git submodule init
-	#git submodule update
+	# git submodule init
+	# git submodule update
 	cd ./build; cmake ..; make all
 
 build_:
