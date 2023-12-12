@@ -4,8 +4,14 @@
 
 Knight::Knight(int x, int y) : NPC(KnightType, x, y) {}
 
-bool Knight::accept(const std::shared_ptr<NPC> &attacker) const {
-    return attacker->fight(*this);
+bool Knight::accept(const std::shared_ptr<NPC> &attacker) {
+    if (isDeath)
+        return false;
+    
+    bool success = attacker->fight(*this);
+    if (success)
+        death();
+    return success;
 }
 bool Knight::fight(const Outlaw &defender) const {
     return true;

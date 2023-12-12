@@ -21,10 +21,15 @@ vector_NPC fight(const vector_NPC &array, size_t distance) {
     for (const auto &attacker : array)
         for (const auto &defender : array)
             if ((attacker != defender) && (attacker->is_close(defender, distance))) {\
+                // std::cout << "Есть доступность для дистанции " << distance << std::endl;
                 bool success = defender->accept(attacker);
 
-                if (success)
+                if (success) {
                     dead_list.push_back(defender);
+                    std::cout << "Есть убийство - защитник и аткаующий:" << std::endl;
+                    defender->print();
+                    attacker->print();
+                }
             }
 
     return dead_list;
@@ -37,6 +42,7 @@ int main()
 
     // Гененрируем начальное распределение монстров
     std::cout << "Generating ..." << std::endl;
+    srand(40);
     for (size_t i = 0; i < 10; ++i)
         array.push_back(factory.factory(NpcType(std::rand() % 3), std::rand() % 100, std::rand() % 100));
     
@@ -48,7 +54,7 @@ int main()
 
     std::cout << "Генерация:" << std::endl << array << std::endl;
 
-    std::cout << "Fighting ..." << std::endl;
+    std::cout << "Fighting ..." << std::endl << std::endl;
     int i = 0;
     for (size_t distance = 20; (distance <= 100) && !array.empty(); distance += 10) {
         auto dead_list = fight(array, distance);
@@ -58,7 +64,7 @@ int main()
         std::cout << "Fight stats ----------" << std::endl
                   << "distance: " << distance << std::endl
                   << "killed: " << dead_list.size() << std::endl
-                  << std::endl << std::endl;
+                  << std::endl;
 
         std::string filename = "txt/npc";
         filename.push_back(++i + '0');
@@ -69,12 +75,12 @@ int main()
 
 
 
-    // Outlaw a(10, 20);
-    // Elf b(10, 21);
+    // Factory factory;
+    // auto o = factory.factory(OutlawType, 0, 0);
+    // auto e = factory.factory(ElfType, 10, 10);
 
-    // shared_ptr<NPC> poutlaw = make_shared<Outlaw>(10, 20);
-
-    // cout << b.accept(poutlaw) << endl;
+	// bool isClose = o->is_close(e, 12);
+    // std::cout << isClose << std::endl;
 
     return 0;
 }

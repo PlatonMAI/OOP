@@ -9,12 +9,16 @@ void NPC::fight_notify(const std::shared_ptr<NPC> defender, bool win) {
     for (auto &observer : observers)
         observer->on_fight(shared_from_this(), defender, win);
 }
-bool NPC::is_close(const std::shared_ptr<NPC> &other, size_t distance) const
-{
+bool NPC::is_close(const std::shared_ptr<NPC> &other, size_t distance) const {
+    // std::cout << "Я " << typeid(*this).name() << " " << this->x << " " << this->y << " считаю доступность для " << typeid(*other).name() << " " << other->x << " " << other->y << std::endl;
+
     if (std::pow(x - other->x, 2) + std::pow(y - other->y, 2) <= std::pow(distance, 2))
         return true;
     else
         return false;
+}
+void NPC::death() {
+    isDeath = true;
 }
 
 void NPC::save(std::ostream &os) {

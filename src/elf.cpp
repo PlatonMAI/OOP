@@ -4,8 +4,14 @@
 
 Elf::Elf(int x, int y) : NPC(ElfType, x, y) {}
 
-bool Elf::accept(const std::shared_ptr<NPC> &attacker) const {
-    return attacker->fight(*this);
+bool Elf::accept(const std::shared_ptr<NPC> &attacker) {
+    if (isDeath)
+        return false;
+    
+    bool success = attacker->fight(*this);
+    if (success)
+        death();
+    return success;
 }
 bool Elf::fight(const Outlaw &defender) const {
     return false;

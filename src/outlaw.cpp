@@ -4,8 +4,14 @@
 
 Outlaw::Outlaw(int x, int y) : NPC(OutlawType, x, y) {}
 
-bool Outlaw::accept(const std::shared_ptr<NPC> &attacker) const {
-    return attacker->fight(*this);
+bool Outlaw::accept(const std::shared_ptr<NPC> &attacker) {
+    if (isDeath)
+        return false;
+    
+    bool success = attacker->fight(*this);
+    if (success)
+        death();
+    return success;
 }
 bool Outlaw::fight(const Outlaw &defender) const {
     // std::cout << "Дерусь с собой епт (это как)" << std::endl;

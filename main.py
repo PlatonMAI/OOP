@@ -12,8 +12,6 @@ step_distance = 10
 
 def plot(data):
     global ax1, pointers
-    # for i in range(10):
-    #     ax1.plot(randint(1, 100), randint(1, 100), 'ro')
     pointers = []
     for i in range(1, len(data) - 1):
         entity = [int(i) for i in data[i].split(" ")]
@@ -21,7 +19,6 @@ def plot(data):
 
 def onPress(event):
     global I, DATA, QUANTITY_FIGHTS, fig, plt, ax1, pointers
-    print(event.key, I)
 
     for pointer in pointers:
         pointer.remove()
@@ -30,7 +27,6 @@ def onPress(event):
         I = (I - 1) % (QUANTITY_FIGHTS + 1)
     elif (event.key == "right"):
         I = (I + 1) % (QUANTITY_FIGHTS + 1)
-    print(DATA[I])
     plot(DATA[I])
     
     if I == 0:
@@ -47,6 +43,10 @@ ax1.axis('equal')
 plt.gca().set_adjustable("box")
 ax1.set(xlim=[0, 100], ylim=[0, 100])
 plt.title("Начальная генерация")
+ax1.plot(-1, -1, 'ro', label = 'Outlaw')
+ax1.plot(-1, -1, 'go', label = 'Knight')
+ax1.plot(-1, -1, 'bo', label = 'Elf')
+plt.legend(bbox_to_anchor=(1, 1))
 
 pointers = []
 with open("npc.txt") as file:
@@ -61,5 +61,18 @@ for i in range(QUANTITY_FIGHTS):
 
 I = 0
 fig.canvas.mpl_connect('key_press_event', onPress)
+
+def onClick(event):
+    global targetPoint
+    if targetPoint[0] == -1:
+        targetPoint[0] = event.xdata
+        targetPoint[1] = event.ydata
+        print("Выбрана точка", targetPoint)
+    else:
+        print("Расстояние: ", int(((event.xdata - targetPoint[0]) ** 2 + (event.ydata - targetPoint[1]) ** 2) ** 0.5))
+        targetPoint = [-1, -1]
+
+targetPoint = [-1, -1]
+fig.canvas.mpl_connect('button_press_event', onClick)
 
 plt.show()
