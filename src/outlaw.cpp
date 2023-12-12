@@ -1,0 +1,37 @@
+#include "outlaw.h"
+#include "knight.h"
+#include "elf.h"
+
+Outlaw::Outlaw(int x, int y) : NPC(OutlawType, x, y) {}
+
+bool Outlaw::accept(const std::shared_ptr<NPC> &attacker) const {
+    return attacker->fight(*this);
+}
+bool Outlaw::fight(const Outlaw &defender) const {
+    // std::cout << "Дерусь с собой епт (это как)" << std::endl;
+    return false;
+};
+bool Outlaw::fight(const Knight &defender) const {
+    // std::cout << "Дерусь с рыцарем епт" << std::endl;
+    return false;
+};
+bool Outlaw::fight(const Elf &defender) const {
+    // std::cout << "Дерусь с эльфом епт" << std::endl;
+    return true;
+};
+
+void Outlaw::print() {
+    print(std::cout);
+}
+void Outlaw::print(std::ostream &os) {
+    os << *this;
+}
+void Outlaw::save(std::ostream &os) {
+    os << OutlawType << " ";
+    NPC::save(os);
+}
+std::ostream &operator<<(std::ostream &os, Outlaw &Outlaw)
+{
+    os << Outlaw::name << " " << *static_cast<NPC*>(&Outlaw) << std::endl;
+    return os;
+}
