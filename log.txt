@@ -1,0 +1,108 @@
+Murder --------
+elf {x:35, y:66}
+knight {x:5, y:61}
+
+Murder --------
+elf {x:2, y:30}
+knight {x:4, y:27}
+
+Murder --------
+outlaw {x:69, y:56}
+elf {x:66, y:63}
+
+Murder --------
+elf {x:19, y:25}
+knight {x:58, y:28}
+
+Murder --------
+outlaw {x:80, y:32}
+elf {x:81, y:29}
+
+Murder --------
+elf {x:80, y:39}
+knight {x:83, y:1}
+
+Murder --------
+outlaw {x:64, y:43}
+elf {x:69, y:38}
+
+Murder --------
+elf {x:31, y:69}
+knight {x:37, y:39}
+
+Murder --------
+elf {x:47, y:6}
+knight {x:88, y:27}
+
+Murder --------
+outlaw {x:24, y:18}
+elf {x:17, y:23}
+
+Murder --------
+outlaw {x:9, y:21}
+elf {x:12, y:26}
+
+Murder --------
+elf {x:47, y:83}
+knight {x:9, y:89}
+
+Murder --------
+elf {x:35, y:66}
+knight {x:77, y:56}
+
+Murder --------
+outlaw {x:26, y:21}
+elf {x:33, y:22}
+
+Murder --------
+knight {x:85, y:36}
+outlaw {x:79, y:33}
+
+Murder --------
+elf {x:85, y:32}
+knight {x:85, y:36}
+
+Murder --------
+outlaw {x:99, y:15}
+elf {x:98, y:18}
+
+Murder --------
+outlaw {x:73, y:24}
+elf {x:81, y:23}
+
+Murder --------
+elf {x:35, y:61}
+knight {x:8, y:85}
+
+Murder --------
+outlaw {x:26, y:65}
+elf {x:35, y:61}
+
+Murder --------
+outlaw {x:45, y:99}
+elf {x:38, y:97}
+
+Murder --------
+outlaw {x:95, y:62}
+elf {x:93, y:65}
+
+Murder --------
+outlaw {x:90, y:22}
+elf {x:88, y:30}
+
+Murder --------
+outlaw {x:14, y:51}
+elf {x:10, y:57}
+
+Murder --------
+outlaw {x:86, y:84}
+elf {x:81, y:92}
+
+Murder --------
+outlaw {x:92, y:16}
+elf {x:92, y:6}
+
+Murder --------
+outlaw {x:87, y:89}
+elf {x:83, y:86}
+

@@ -5,10 +5,11 @@
 Knight::Knight(int x, int y) : NPC(KnightType, x, y) {}
 
 bool Knight::accept(const std::shared_ptr<NPC> &attacker) {
-    if (isDeath)
+    if (isDead)
         return false;
     
     bool success = attacker->fight(*this);
+    attacker->fight_notify(shared_from_this(), success);
     if (success)
         death();
     return success;
@@ -22,6 +23,13 @@ bool Knight::fight(const Knight &defender) const {
 bool Knight::fight(const Elf &defender) const {
     return false;
 };
+int Knight::getDistanceFight() const {
+    return distance_fight;
+}
+
+int Knight::getDistanceMove() const {
+    return distance_move;
+}
 
 void Knight::print() {
     print(std::cout);

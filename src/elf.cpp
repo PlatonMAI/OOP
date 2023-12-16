@@ -1,14 +1,15 @@
+#include "elf.h"
 #include "outlaw.h"
 #include "knight.h"
-#include "elf.h"
 
 Elf::Elf(int x, int y) : NPC(ElfType, x, y) {}
 
 bool Elf::accept(const std::shared_ptr<NPC> &attacker) {
-    if (isDeath)
+    if (isDead)
         return false;
     
     bool success = attacker->fight(*this);
+    attacker->fight_notify(shared_from_this(), success);
     if (success)
         death();
     return success;
@@ -22,6 +23,13 @@ bool Elf::fight(const Knight &defender) const {
 bool Elf::fight(const Elf &defender) const {
     return false;
 };
+int Elf::getDistanceFight() const {
+    return distance_fight;
+}
+
+int Elf::getDistanceMove() const {
+    return distance_move;
+}
 
 void Elf::print() {
     print(std::cout);

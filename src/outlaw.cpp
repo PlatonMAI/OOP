@@ -5,10 +5,11 @@
 Outlaw::Outlaw(int x, int y) : NPC(OutlawType, x, y) {}
 
 bool Outlaw::accept(const std::shared_ptr<NPC> &attacker) {
-    if (isDeath)
+    if (isDead)
         return false;
     
     bool success = attacker->fight(*this);
+    attacker->fight_notify(shared_from_this(), success);
     if (success)
         death();
     return success;
@@ -25,6 +26,13 @@ bool Outlaw::fight(const Elf &defender) const {
     // std::cout << "Дерусь с эльфом епт" << std::endl;
     return true;
 };
+int Outlaw::getDistanceFight() const {
+    return distance_fight;
+}
+
+int Outlaw::getDistanceMove() const {
+    return distance_move;
+}
 
 void Outlaw::print() {
     print(std::cout);

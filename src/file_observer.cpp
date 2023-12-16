@@ -11,7 +11,7 @@ void FileObserver::on_fight(const std::shared_ptr<NPC> attacker, const std::shar
     if (!win)
         return;
 
-    file << "\nMurder --------\n";
+    file << "Murder --------\n";
     attacker->print(file);
     defender->print(file);
     file << std::endl;
